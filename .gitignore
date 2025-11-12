@@ -1,0 +1,21 @@
+# Node
+node_modules/
+.next/
+dist/
+
+# Go
+bin/
+*.exe
+*.out
+*.log
+
+# Env
+.env
+.env.local
+
+# IDE
+.vscode/
+.idea/
+
+# System
+.DS_Store
