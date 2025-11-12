@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { loginSuccess } from "@/store/authSlice";
-
+import axios from "axios";
 type AuthFormProps = {
   mode: "login" | "signup";
 };
@@ -59,9 +59,13 @@ export default function AuthForm({ mode }: AuthFormProps) {
         //  Navigate to dashboard
         router.push("/dashboard");
       }
-    } catch (err: any) {
+    } catch (err) {
       console.error("Auth error:", err);
-      setError(err.response?.data?.error || "Something went wrong");
+      if (axios.isAxiosError(err)) {
+    setError(err.response?.data?.error || "Authentication failed");
+  } else {
+    setError("An unexpected error occurred");
+  }
     }
   };
 
