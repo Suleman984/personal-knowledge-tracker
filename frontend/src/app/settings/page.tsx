@@ -23,7 +23,7 @@ const Settings = () => {
             <div>
               <div className="font-semibold text-lg">Settings coming soon</div>
               <p className="text-sm opacity-90">
-                We're building the settings page — preferences and controls will be available shortly.
+                We&apos;re building the settings page — preferences and controls will be available shortly.
               </p>
             </div>
 

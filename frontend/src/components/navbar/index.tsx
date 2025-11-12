@@ -5,12 +5,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store";
 import { handleLogout } from "@/lib/logoutHandler";
 import { LogOut } from "lucide-react";
-import { on } from "events";
 
 export default function Navbar() {
   const router = useRouter();
   const dispatch = useDispatch();
-  const { user, isAuthenticated } = useSelector((state: RootState) => state.auth);
+  const {  isAuthenticated } = useSelector((state: RootState) => state.auth);
 
     const onLogout = async () => {
     await handleLogout(dispatch);

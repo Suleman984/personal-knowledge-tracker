@@ -24,45 +24,46 @@ export default function AuthForm({ mode }: AuthFormProps) {
   const router = useRouter();
   const dispatch = useDispatch();
 
-const onSubmit = async (data: AuthFormData) => {
-  try {
-    if (mode === "signup") {
-      const res = await api.post("/users/signup", data);
-      // show success message then redirect to login
-      if (res.status >= 200 && res.status < 300) {
-        setError("Registered successfully. Redirecting to login...");
-        setTimeout(() => router.push("/login"), 1500);
+  const onSubmit = async (data: AuthFormData) => {
+    try {
+      if (mode === "signup") {
+        const res = await api.post("/users/signup", data);
+        // show success message then redirect to login
+        if (res.status >= 200 && res.status < 300) {
+          setError("Registered successfully. Redirecting to login...");
+          setTimeout(() => router.push("/login"), 1500);
+        } else {
+          setError(res.data?.error || "Registration failed");
+        }
+        return;
       } else {
-        setError(res.data?.error || "Registration failed");
-      }
-      return;
-    } else {
-      const res = await api.post("/users/login", data, { withCredentials: true });
-      const user = res.data.user;
+        const res = await api.post("/users/login", data, { withCredentials: true });
+        const user = res.data.user;
 
-      // update user in store
-      dispatch(loginSuccess(user));
+        // update user in store
+        dispatch(loginSuccess(user));
 
-//fetch token and send to extension
-            const token = res.data.token; // assuming backend returns token in response
-            if (token && (window as any).chrome?.runtime && process.env.NEXT_PUBLIC_EXTENSION_ID) {
-              (window as any).chrome.runtime.sendMessage(
-                process.env.NEXT_PUBLIC_EXTENSION_ID,
-                { type: "SET_TOKEN", token },
-                (response: any) => {
-                  console.log("✅ Token sent to extension:", response);
-                }
-              );
+
+        const token = res.data.token;
+        if (token && window.chrome?.runtime && process.env.NEXT_PUBLIC_EXTENSION_ID) {
+          window.chrome.runtime.sendMessage(
+            process.env.NEXT_PUBLIC_EXTENSION_ID,
+            { type: "SET_TOKEN", token },
+            (response) => {
+              console.log("✅ Token sent to extension:", response);
             }
+          );
+        }
 
-      //  Navigate to dashboard
-      router.push("/dashboard");
+
+        //  Navigate to dashboard
+        router.push("/dashboard");
+      }
+    } catch (err: any) {
+      console.error("Auth error:", err);
+      setError(err.response?.data?.error || "Something went wrong");
     }
-  } catch (err: any) {
-    console.error("Auth error:", err);
-    setError(err.response?.data?.error || "Something went wrong");
-  }
-};
+  };
 
 
   return (

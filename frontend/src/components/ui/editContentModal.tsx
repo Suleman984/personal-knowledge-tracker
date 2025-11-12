@@ -47,7 +47,7 @@ const EditContentModal: React.FC<EditContentModalProps> = ({
       });
       onUpdated(); // refresh list
       onClose();
-    } catch (err: any) {
+    } catch (err) {
       console.error("Error updating content:", err);
       setError("Failed to update content");
     } finally {

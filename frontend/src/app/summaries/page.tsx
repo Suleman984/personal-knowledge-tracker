@@ -20,7 +20,7 @@ const Summaries = () => {
         params: { query: searchQuery || "" },
       });
       setContents(response.data.contents || []);
-    } catch (err: any) {
+    } catch (err) {
       console.error("Error fetching contents:", err);
     } finally {
       setLoading(false);
@@ -40,7 +40,7 @@ const Summaries = () => {
     try {
       await api.delete(`/contents/${id}`);
       setContents(contents.filter((c) => c.id !== id));
-    } catch (err: any) {
+    } catch (err) {
       console.error("Error deleting content:", err);
       alert("Failed to delete content.");
     }
