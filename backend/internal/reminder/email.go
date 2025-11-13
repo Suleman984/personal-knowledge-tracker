@@ -7,13 +7,13 @@ import (
 )
 
 func SendReminderEmail(to, title, createdAt string) error {
-	from := "abc@gmail.com"         // replace with your email
-	password := "your-app-password" // app password (not your login)
+	from := "sulemanefc@gmail.com"
+	password := os.Getenv("pass")
 
 	// SMTP config (for Gmail)
-	smtpHost := os.Getenv("pass")
+	smtpHost := "smtp.gmail.com"
 	smtpPort := "587"
-
+	fmt.Println("SMTP server:", smtpHost)
 	subject := "📢 PKR PORTAL: Reminder for your summary"
 	body := fmt.Sprintf(`
 <!DOCTYPE html>

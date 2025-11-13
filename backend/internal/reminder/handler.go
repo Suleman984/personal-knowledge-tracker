@@ -40,7 +40,7 @@ func ListReminders(c *gin.Context) {
 
 	err := db.DB.Select(&reminders, query, userID)
 	if err != nil {
-		fmt.Println("❌ Error fetching reminders:", err) // 👈 log the error
+		fmt.Println("❌ Error fetching reminders:", err)
 		c.JSON(500, gin.H{"error": "Failed to fetch reminders", "details": err.Error()})
 		return
 	}

@@ -16,7 +16,7 @@ func GenerateJWT(userid int64) (string, error) {
 	claims := JWTClaims{
 		USERID: userid,
 		RegisteredClaims: jwt.RegisteredClaims{
-			ExpiresAt: jwt.NewNumericDate(time.Now().Add(1 * time.Hour)), // Token expires in 1 hour
+			ExpiresAt: jwt.NewNumericDate(time.Now().Add(24 * time.Hour)), // Token expires in 1 hour
 		},
 	}
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
