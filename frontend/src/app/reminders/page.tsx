@@ -48,7 +48,7 @@ const Reminders = () => {
   const updateReminderDate = async (id: number) => {
     if (!newDate) return;
     try {
-      await api.put(`/reminders/${id}/edit`, { schedule_for: newDate });
+      await api.put(`api/reminders/${id}/edit`, { schedule_for: newDate });
       setReminders((prev) =>
         prev.map((r) =>
           r.id === id ? { ...r, schedule_for: newDate.toISOString() } : r
